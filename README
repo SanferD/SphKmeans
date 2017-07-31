@@ -1,0 +1,37 @@
+Assumptions:
+	1. There is a folder called reuters21578 in the same directory as parser.py.
+		If not change line 7 of parser.py
+
+Makefile stuff:
+	Might need to load module soft/gcc/4.9.2
+
+	Preprocess:
+		make preprocess
+	Build Executable (release):
+		make kmeans
+	Build Executable (debug):
+		make all
+	Clean slate:
+		make clean
+
+To run:
+	./sphkmeans <input-file> <class-file> <#clusters> <#trials> <output-file>
+
+Notes:
+	Initial centroids are randomly chosen document vectors.
+	Empty clusters are initialized by finding all the documents in the largest cluster and spliting it into two arbitrary halves.	
+	If there is an empty cluster at the point of convergence, the above step is carried out and the algorithm tries again.
+
+	The only additional preprocessing I've done is remove all special HTML characters.
+	The list of such characters are found in spec_chars.py and begin with &.
+
+	The preprocessing takes about 5.5 mins to run.
+	All test cases should in total take less than 2 hours to run.
+
+	I usually run my code in the following manner:
+
+	python parser.py
+	make kmeans
+	python run.py
+
+	The last run.py runs ./sphkmeans for every possible combination of input-file and K and prints the output to the console.
